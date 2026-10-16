@@ -156,7 +156,7 @@ node --test test/     # 或 npm test
 dsh plugin --profile web add github:guwenwu112233-dot/dsh-media-sideba
 ```
 
-或从本地克隆装：
+或从本地目录装：
 
 ```sh
 dsh plugin --profile web add /path/to/dsh-media-sidebar
