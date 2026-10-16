@@ -1,0 +1,26 @@
+# 依赖与包管理器产物
+node_modules/
+.pnpm-store/
+
+# 日志
+*.log
+npm-debug.log*
+
+# 本插件的运行时产物：密钥绝不进仓库
+cache/
+*.secret
+
+# 本地测试/试听素材（仓库里不该有媒体大文件）
+*.mkv
+*.avi
+*.flv
+*.wmv
+*.wma
+_selftest.*
+_probe.*
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 装上 ffmpeg（Ubuntu 的构建带 libx264），这样转码那两条用例在 CI 里也真跑。
+      # 不装也能过：插件会明确回 415 transcode-unavailable，对应用例断言这个分支。
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Show ffmpeg encoders
+        run: ffmpeg -hide_banner -loglevel error -encoders | grep -c libx264 || true
+
+      - name: Run tests
+        run: node --test test/host.test.mjs

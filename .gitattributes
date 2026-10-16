@@ -1,0 +1,2 @@
+# 统一以 LF 入库，避免跨平台行尾噪声（尤其 .yml）
+* text=auto eol=lf
