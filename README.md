@@ -183,5 +183,8 @@ dsh plugin --profile web add /path/to/dsh-media-sidebar
 - 不做播放列表。
 - **解码取决于浏览器，转码取决于 ffmpeg**：原生格式（`flac`/`opus`/`mov` 等）在部分环境可能不被解码；
   转码格式（`mkv/avi/flv/wmv/wma`）**必须**有 ffmpeg + libx264，且**不支持拖动进度**（见上方「转码」）。
-- 宿主半边与客户端半边都**只在进程启动时装载**：改完 `src/` 需要**重启 DSH Desktop**，
-  热重载不适用于本插件的宿主模块，客户端 bundle 又是按 revision 不可变的。
+- **改代码后的加载时机（重要）**：宿主半边只在**进程启动**时装载，改 `src/host/` 必须
+  **重启 DSH Desktop**；而客户端半边可以在**刷新页面**时被重新下发。
+  所以"刷新了页面但没重启"会出现**新客户端 + 旧宿主**的错配 —— 典型症状是客户端报
+  `not-found-route`（它在请求宿主还不认识的 `/dsh-media/api/token`）。
+  改完 `src/` 就重启，别只刷新。
